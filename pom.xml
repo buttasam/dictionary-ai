@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.helidon.applications</groupId>
         <artifactId>helidon-mp</artifactId>
-        <version>4.0.9</version>
+        <version>4.0.10</version>
         <relativePath/>
     </parent>
     <groupId>com.secondbrainai</groupId>
@@ -75,6 +75,12 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.wiremock</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>3.6.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

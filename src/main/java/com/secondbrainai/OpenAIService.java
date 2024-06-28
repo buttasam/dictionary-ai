@@ -28,8 +28,8 @@ public class OpenAIService {
     private final String openAIToken;
 
     @Inject
-    public OpenAIService(@ConfigProperty(name = "openapi.endpoint") String openAIApiEndpoint,
-                         @ConfigProperty(name = "openai.api.token") String openAIToken) {
+    public OpenAIService(@ConfigProperty(name = "openai.endpoint") String openAIApiEndpoint,
+                         @ConfigProperty(name = "openai.token") String openAIToken) {
         this.openAIWebTarget = client.target(openAIApiEndpoint);
         this.openAIToken = openAIToken;
     }
