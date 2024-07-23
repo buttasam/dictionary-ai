@@ -1,4 +1,4 @@
-package com.secondbrainai;
+package com.secondbrainai.service;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.secondbrainai.model.TranslationResponse;
 import com.secondbrainai.model.PromptModel;
+import com.secondbrainai.utils.Constants;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.client.Client;

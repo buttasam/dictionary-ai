@@ -1,0 +1,13 @@
+javax:
+  sql:
+    DataSource:
+      postgres:
+        dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
+        dataSource:
+          url: jdbc:postgresql://localhost/postgres
+          user: sbutta
+          password: ""
+
+openai:
+  endpoint: https://api.openai.com/v1
+  token: "your-token"

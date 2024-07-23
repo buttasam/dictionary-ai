@@ -82,4 +82,8 @@ class MainTest {
                 """)));
     }
 
+    @Test
+    public void testTranslate() {
+        target.path("/openai").request().get();
+    }
 }

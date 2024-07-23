@@ -1,4 +1,4 @@
-package com.secondbrainai;
+package com.secondbrainai.utils;
 
 public class Constants {
 
@@ -10,7 +10,6 @@ public class Constants {
                 You are a translator from English to Czech.
                 Provide translation for a given word or sentence.
                 Response will be in JSON format with array field called translations.""";
-
 
     }
 
