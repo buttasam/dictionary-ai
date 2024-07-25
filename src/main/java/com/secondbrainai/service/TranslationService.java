@@ -2,7 +2,6 @@ package com.secondbrainai.service;
 
 import com.secondbrainai.dao.TranslationDao;
 import com.secondbrainai.model.Language;
-import com.secondbrainai.model.TranslationResponse;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -22,14 +21,13 @@ public class TranslationService {
 
 
     public List<String> translate(String word) {
-
+        // TODO
         // get translation from DB
         boolean exists = translationDao.wordExists(word, Language.CS);
 
         if (!exists) {
-            TranslationResponse response = openAIService.translate(word);
+            //TranslationResponse response = openAIService.translate(word);
         }
-
 
         // fetch from OpenAI
 
