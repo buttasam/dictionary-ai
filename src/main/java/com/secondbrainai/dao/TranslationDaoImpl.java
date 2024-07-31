@@ -68,8 +68,9 @@ public class TranslationDaoImpl implements TranslationDao {
 
     private int insertWord(Connection connection, String word, Language language) {
         // find word
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM dictionary WHERE word = ?")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM dictionary WHERE word = ? AND language = ?::language;")) {
             preparedStatement.setString(1, word);
+            preparedStatement.setString(2, language.name());
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {

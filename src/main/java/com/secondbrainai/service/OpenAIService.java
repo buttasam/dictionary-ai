@@ -25,8 +25,7 @@ import java.util.logging.Logger;
 @ApplicationScoped
 public class OpenAIService {
 
-    private static Logger LOGGER = Logger.getLogger(OpenAIService.class.getName());
-
+    private static final Logger LOGGER = Logger.getLogger(OpenAIService.class.getName());
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final Client client = ClientBuilder.newClient();
@@ -64,7 +63,7 @@ public class OpenAIService {
                 new PromptModel.ResponseFormat("json_object"),
                 List.of(new PromptModel.Message("system", Constants.Prompts.translator(from, to)),
                         new PromptModel.Message("user", text)
-                ));
+                ), 0.5);
         LOGGER.info(model.toString());
         return model;
     }

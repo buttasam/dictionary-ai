@@ -1,6 +1,10 @@
 package com.secondbrainai.model;
 
-public record TranslationRequest(String word,
-                                 Language fromLang,
-                                 Language toLang) {
+import com.secondbrainai.model.validation.WordsLimit;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+public record TranslationRequest(@NotNull @WordsLimit @Size(min = 1, max = 200) String word,
+                                 @NotNull Language fromLang,
+                                 @NotNull Language toLang) {
 }

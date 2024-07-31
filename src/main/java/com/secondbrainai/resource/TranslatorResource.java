@@ -5,6 +5,8 @@ import com.secondbrainai.model.TranslationResponse;
 import com.secondbrainai.service.TranslationService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -26,7 +28,7 @@ public class TranslatorResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public TranslationResponse translate(TranslationRequest request) {
+    public TranslationResponse translate(@NotNull @Valid TranslationRequest request) {
         return translationService.translate(request);
     }
 
