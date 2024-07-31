@@ -5,6 +5,7 @@ import com.secondbrainai.model.Language;
 public class Constants {
 
     public static final String MODEL_3_5_TURBO = "gpt-3.5-turbo";
+    public static final String MODEL_4_O_MINI = "gpt-4o-mini";
 
     public static class Prompts {
 

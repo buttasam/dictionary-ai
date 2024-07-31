@@ -1,8 +1,8 @@
 package com.secondbrainai.resource;
 
-import com.secondbrainai.model.Language;
+import com.secondbrainai.model.TranslationRequest;
 import com.secondbrainai.model.TranslationResponse;
-import com.secondbrainai.service.OpenAIService;
+import com.secondbrainai.service.TranslationService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -15,26 +15,19 @@ import jakarta.ws.rs.core.MediaType;
 @ApplicationScoped
 public class TranslatorResource {
 
-    private final OpenAIService openAIService;
+    private final TranslationService translationService;
 
     @Inject
-    public TranslatorResource(OpenAIService openAIService) {
-        this.openAIService = openAIService;
+    public TranslatorResource(TranslationService translationService) {
+        this.translationService = translationService;
     }
 
     @Path("/translate")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public TranslationResponse translate(TranslationRequest translationRequest) {
-        return openAIService.translate(
-                translationRequest.word(),
-                translationRequest.fromLang(),
-                translationRequest.toLang());
+    public TranslationResponse translate(TranslationRequest request) {
+        return translationService.translate(request);
     }
 
-    public record TranslationRequest(String word,
-                                     Language fromLang,
-                                     Language toLang) {
-    }
 }

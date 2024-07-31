@@ -60,7 +60,7 @@ public class OpenAIService {
     }
 
     public PromptModel getTranslationPrompt(String text, Language from, Language to) {
-        var model = new PromptModel(Constants.MODEL_3_5_TURBO,
+        var model = new PromptModel(Constants.MODEL_4_O_MINI,
                 new PromptModel.ResponseFormat("json_object"),
                 List.of(new PromptModel.Message("system", Constants.Prompts.translator(from, to)),
                         new PromptModel.Message("user", text)
