@@ -10,7 +10,7 @@
         <relativePath/>
     </parent>
     <groupId>com.secondbrainai</groupId>
-    <artifactId>second-brain-ai</artifactId>
+    <artifactId>dictionary-ai-backend</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
