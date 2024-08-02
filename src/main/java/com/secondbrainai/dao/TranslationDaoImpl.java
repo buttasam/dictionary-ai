@@ -27,9 +27,9 @@ public class TranslationDaoImpl implements TranslationDao {
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(
                     """
-                             SELECT d_to.word as to_word FROM dictionary d_from
-                             JOIN translation t ON t.from_id = d_from.id
-                             JOIN dictionary d_to ON t.to_id = d_to.id
+                             SELECT d_to.word as to_word FROM words d_from
+                             JOIN translations t ON t.from_id = d_from.id
+                             JOIN words d_to ON t.to_id = d_to.id
                              WHERE d_from.word = ? AND d_from.language = ?::language
                              AND d_to.language = ?::language;
                             """
@@ -68,7 +68,7 @@ public class TranslationDaoImpl implements TranslationDao {
 
     private int insertWord(Connection connection, String word, Language language) {
         // find word
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM dictionary WHERE word = ? AND language = ?::language;")) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM words WHERE word = ? AND language = ?::language;")) {
             preparedStatement.setString(1, word);
             preparedStatement.setString(2, language.name());
 
@@ -81,7 +81,7 @@ public class TranslationDaoImpl implements TranslationDao {
         }
 
         // or else insert
-        String insertWordSQL = "INSERT INTO dictionary(word, language) VALUES (?, ?::language)";
+        String insertWordSQL = "INSERT INTO words(word, language) VALUES (?, ?::language)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertWordSQL, PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, word);
             preparedStatement.setString(2, language.name());
@@ -99,7 +99,7 @@ public class TranslationDaoImpl implements TranslationDao {
     }
 
     private void insertRelations(Connection connection, int wordId, List<Integer> translationIds) throws SQLException {
-        String insertRelationSQL = "INSERT INTO translation(from_id, to_id) VALUES (?, ?) ON CONFLICT DO NOTHING";
+        String insertRelationSQL = "INSERT INTO translations(from_id, to_id) VALUES (?, ?) ON CONFLICT DO NOTHING";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertRelationSQL)) {
             for (Integer translationId : translationIds) {
                 preparedStatement.setInt(1, wordId);

@@ -1,6 +1,8 @@
 package com.secondbrainai.service;
 
+import com.secondbrainai.dao.FavoriteWordsDao;
 import com.secondbrainai.dao.TranslationDao;
+import com.secondbrainai.model.FavoriteRequest;
 import com.secondbrainai.model.TranslationRequest;
 import com.secondbrainai.model.TranslationResponse;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -12,11 +14,15 @@ import java.util.List;
 public class TranslationService {
 
     private final TranslationDao translationDao;
+    private final FavoriteWordsDao favoriteWordsDao;
     private final OpenAIService openAIService;
 
     @Inject
-    public TranslationService(TranslationDao translationDao, OpenAIService openAIService) {
+    public TranslationService(TranslationDao translationDao,
+                              FavoriteWordsDao favoriteWordsDao,
+                              OpenAIService openAIService) {
         this.translationDao = translationDao;
+        this.favoriteWordsDao = favoriteWordsDao;
         this.openAIService = openAIService;
     }
 
@@ -38,4 +44,7 @@ public class TranslationService {
         );
     }
 
+    public void saveWordToFavorite(FavoriteRequest favoriteRequest) {
+        favoriteWordsDao.saveFavoriteWord(favoriteRequest.wordId(), favoriteRequest.userId());
+    }
 }
