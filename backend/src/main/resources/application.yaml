@@ -11,3 +11,10 @@ javax:
 openai:
   endpoint: https://api.openai.com/v1
   token: "your-token"
+
+# it allows all - needs to be updated for production setup
+cors:
+  paths:
+    - path-pattern: "*"
+      allow-methods: "*"
+      allow-origins: "*"
