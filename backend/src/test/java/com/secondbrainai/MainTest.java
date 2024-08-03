@@ -30,30 +30,30 @@ class MainTest {
     private WebTarget target;
 
     private static final String MOCK_RESPONSE = """
-        {
-          "id": "chatcmpl-9f7ietnujnTBljocuTTb6pPWIhhmP",
-          "object": "chat.completion",
-          "created": 1719588148,
-          "model": "gpt-3.5-turbo-0125",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "{\\n    \\"translations\\": [\\"postoj\\", \\"názor\\", \\"přístup\\"]\\n}"
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 42,
-            "completion_tokens": 21,
-            "total_tokens": 63
-          },
-          "system_fingerprint": null
-        }
-    """;
+                {
+                  "id": "chatcmpl-9f7ietnujnTBljocuTTb6pPWIhhmP",
+                  "object": "chat.completion",
+                  "created": 1719588148,
+                  "model": "gpt-3.5-turbo-0125",
+                  "choices": [
+                    {
+                      "index": 0,
+                      "message": {
+                        "role": "assistant",
+                        "content": "{\\n    \\"translations\\": [\\"postoj\\", \\"názor\\", \\"přístup\\"]\\n}"
+                      },
+                      "logprobs": null,
+                      "finish_reason": "stop"
+                    }
+                  ],
+                  "usage": {
+                    "prompt_tokens": 42,
+                    "completion_tokens": 21,
+                    "total_tokens": 63
+                  },
+                  "system_fingerprint": null
+                }
+            """;
 
     @BeforeEach
     void setupMock() {
@@ -64,26 +64,23 @@ class MainTest {
     }
 
     @Test
-    void testHealth(WireMockRuntimeInfo wmRuntimeInfo) throws JsonProcessingException {
+    void testTranslate(WireMockRuntimeInfo wmRuntimeInfo) throws JsonProcessingException {
         String requestPayload = """
-            {
-              "word": "for granted"
-            }
-            """;
+                {
+                  "word": "attitude",
+                  "fromLang": "EN",
+                  "toLang": "CS"
+                }
+                """;
 
         Response response = target
-                .path("/openai/translate")
+                .path("/translator/translate")
                 .request()
                 .post(Entity.json(requestPayload));
 
         assertThat(response.getStatus(), is(200));
         assertThat(response.readEntity(JsonNode.class), is(MAPPER.readTree("""
-                {"translations": ["postoj", "názor", "přístup"]}
+                {"word":"attitude","translations":["postoj","názor","přístup"],"fromLang":"EN","toLang":"CS"}
                 """)));
-    }
-
-    @Test
-    public void testTranslate() {
-        target.path("/openai").request().get();
     }
 }

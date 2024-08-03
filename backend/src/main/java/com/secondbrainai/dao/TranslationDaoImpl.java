@@ -2,9 +2,7 @@ package com.secondbrainai.dao;
 
 import com.secondbrainai.model.Language;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,42 +11,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
-public class TranslationDaoImpl implements TranslationDao {
-
-    private final DataSource dataSource;
-
-    @Inject
-    public TranslationDaoImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+public class TranslationDaoImpl extends AbstractDao implements TranslationDao {
 
     public List<String> findTranslations(String word, Language fromLang, Language toLang) {
-        List<String> translations = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    """
-                             SELECT d_to.word as to_word FROM words d_from
-                             JOIN translations t ON t.from_id = d_from.id
-                             JOIN words d_to ON t.to_id = d_to.id
-                             WHERE d_from.word = ? AND d_from.language = ?::language
-                             AND d_to.language = ?::language;
-                            """
-            );
+        String sql = """
+                SELECT d_to.word as to_word FROM words d_from
+                JOIN translations t ON t.from_id = d_from.id
+                JOIN words d_to ON t.to_id = d_to.id
+                WHERE d_from.word = ? AND d_from.language = ?::language
+                AND d_to.language = ?::language;
+                """;
 
-            preparedStatement.setString(1, word);
-            preparedStatement.setString(2, fromLang.name());
-            preparedStatement.setString(3, toLang.name());
-            ResultSet result = preparedStatement.executeQuery();
-
-            while (result.next()) {
-                translations.add(result.getString("to_word"));
+        return executeQuery(sql, r -> {
+            List<String> translations = new ArrayList<>();
+            while (r.next()) {
+                translations.add(r.getString("to_word"));
             }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return translations;
+            return translations;
+        }, word, fromLang.name(), toLang.name());
     }
 
     public void insertTranslation(String word, Language fromLang, List<String> translations, Language toLang) {
