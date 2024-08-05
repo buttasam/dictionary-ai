@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type {Ref} from "vue";
-import Spinner from "~/components/spinner.vue";
+import Spinner from "~/components/Spinner.vue";
 
 enum Language {
   EN = 'EN',
