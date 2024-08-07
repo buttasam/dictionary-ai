@@ -8,6 +8,7 @@ enum Language {
 }
 
 interface TranslateResponse {
+  wordId?: number;
   translations: string[];
 }
 
@@ -15,6 +16,7 @@ const word: Ref<string> = ref("");
 const fromLang: Ref<Language> = ref(Language.EN);
 const toLang: Ref<Language> = ref(Language.CS);
 const translations: Ref<Array<string> | null> = ref(null);
+const wordId: Ref<number | undefined> = ref(null);
 const pending: Ref<boolean> = ref(false);
 const showError: Ref<boolean> = ref(false);
 
@@ -32,6 +34,7 @@ async function submitForm(): Promise<void> {
     })
     console.log(response);
     translations.value = response.translations;
+    wordId.value = response.wordId;
   } catch (error) {
     console.log(error);
     showError.value = true;
@@ -82,6 +85,8 @@ async function submitForm(): Promise<void> {
           </form>
 
           <div class="flex flex-col items-center justify-center mx-auto">
+
+            <FavoriteWordSaver :word-id="wordId" />
 
             <Spinner :show="pending"/>
 

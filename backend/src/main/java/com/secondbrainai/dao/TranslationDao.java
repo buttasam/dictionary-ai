@@ -10,4 +10,5 @@ public interface TranslationDao {
 
     void insertTranslation(String word, Language fromLang, List<String> translations, Language toLang);
 
+    Integer findWordId(String word, Language language);
 }

@@ -1,3 +1,16 @@
+<script setup lang="ts">
+
+import type {Ref} from "vue";
+
+// FIXME
+const favoriteWords: Ref<Array<string>> = await $fetch("http://localhost:8080/translator/favorite?userId=1");
+
+</script>
+
 <template>
-  Favorite page
+  <ul>
+    <li v-for="favoriteWord in favoriteWords">
+      {{favoriteWord}}
+    </li>
+  </ul>
 </template>

@@ -32,6 +32,7 @@ CREATE TABLE favorite_words
     word_id INT NOT NULL,
     user_id INT NOT NULL,
     PRIMARY KEY (word_id, user_id),
+    created_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (word_id) REFERENCES words (id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 )

@@ -17,9 +17,10 @@ public class FavoriteWordsDaoImpl extends AbstractDao implements FavoriteWordsDa
     @Override
     public List<String> getAllFavoriteWords(int userId) {
         var sql = """
-                   SELECT w.word AS word FROM words w
+                   SELECT w.word, fw.created_timestamp AS word FROM words w
                    JOIN favorite_words fw ON fw.word_id = w.id
                    WHERE fw.user_id = ?
+                   ORDER BY fw.created_timestamp DESC
                 """;
         return executeQuery(sql, r -> {
             List<String> favoriteWords = new ArrayList<>();

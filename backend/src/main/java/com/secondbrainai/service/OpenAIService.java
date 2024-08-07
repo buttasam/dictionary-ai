@@ -52,7 +52,7 @@ public class OpenAIService {
             String content = response.readEntity(JsonNode.class).at("/choices/0/message/content").textValue();
             List<String> translations = MAPPER.readValue(content, OpenAITranslationResponse.class).translations();
 
-            return new TranslationResponse(word, translations, fromLang, toLang);
+            return new TranslationResponse(word, null,  translations, fromLang, toLang);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

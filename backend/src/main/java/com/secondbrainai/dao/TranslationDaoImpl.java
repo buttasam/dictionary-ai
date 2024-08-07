@@ -46,6 +46,18 @@ public class TranslationDaoImpl extends AbstractDao implements TranslationDao {
         }
     }
 
+    @Override
+    public Integer findWordId(String word, Language language) {
+        return executeQuery("""
+                SELECT id FROM words WHERE word = ? AND language = ?::language
+                """, r -> {
+            if (r.next()) {
+                return r.getInt("id");
+            }
+            return null;
+        }, word, language.name());
+    }
+
     private int insertWord(Connection connection, String word, Language language) {
         // find word
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM words WHERE word = ? AND language = ?::language;")) {

@@ -36,8 +36,10 @@ public class TranslationService {
             translations = response.translations();
         }
 
+        Integer wordId = translationDao.findWordId(request.word(), request.fromLang());
         return new TranslationResponse(
                 request.word(),
+                wordId,
                 translations,
                 request.fromLang(),
                 request.toLang()
