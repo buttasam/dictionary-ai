@@ -1,10 +1,17 @@
 <script setup lang="ts">
 
+import type {Ref} from "vue";
+
+const BORDER_ICON = "ic:baseline-star-border";
+const FILLED_ICON = "ic:baseline-star";
+
 interface Props {
   wordId?: number
 }
 
 const props = defineProps<Props>()
+
+const icon: Ref<string> = ref(BORDER_ICON);
 
 async function saveToFavorite() {
   try {
@@ -25,8 +32,11 @@ async function saveToFavorite() {
 
 <template>
   <div v-if="wordId">
-    <Icon @click="saveToFavorite" name="material-symbols:star-outline-rounded" class="text-3xl hover:cursor-pointer"/>
-    <h1>WordId: {{wordId}}</h1>
+    <Icon @click="saveToFavorite" :name="icon" class="text-3xl hover:cursor-pointer"
+          @mouseover="() => icon = FILLED_ICON"
+          @mouseleave="() => icon = BORDER_ICON"
+    />
+    <h1>Word id: {{ wordId }}</h1>
   </div>
 </template>
 
