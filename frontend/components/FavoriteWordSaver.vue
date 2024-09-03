@@ -6,7 +6,8 @@ const BORDER_ICON = "ic:baseline-star-border";
 const FILLED_ICON = "ic:baseline-star";
 
 interface Props {
-  wordId?: number
+  wordId?: number,
+  word: string
 }
 
 const props = defineProps<Props>()
@@ -32,11 +33,15 @@ async function saveToFavorite() {
 
 <template>
   <div v-if="wordId">
-    <Icon @click="saveToFavorite" :name="icon" class="text-3xl hover:cursor-pointer"
-          @mouseover="() => icon = FILLED_ICON"
-          @mouseleave="() => icon = BORDER_ICON"
-    />
-    <h1>Word id: {{ wordId }}</h1>
+    <div class="flex">
+      <h1 class="text-xl">{{ word }}</h1>
+
+      <Icon @click="saveToFavorite" :name="icon" class="text-3xl hover:cursor-pointer"
+            @mouseover="() => icon = FILLED_ICON"
+            @mouseleave="() => icon = BORDER_ICON"
+      />
+    </div>
+
   </div>
 </template>
 

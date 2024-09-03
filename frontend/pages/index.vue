@@ -45,61 +45,50 @@ async function submitForm(): Promise<void> {
 </script>
 
 <template>
-  <div>
-    <section class="bg-gray-100">
-      <div class="flex flex-col items-center justify-center mx-auto h-screen">
-        <a href="#" class="flex items-center mb-6 text-2xl text-gray-900">
-          <Icon name="material-symbols:dictionary-outline-rounded" class="mr-1"/>
-          Dictionary AI
-        </a>
-
-        <div class="w-full md:w-1/2 lg:w-1/4 p-10 md:p-0">
-          <form @submit.prevent="submitForm">
-            <div>
-              <label for="word" class="block mb-2 text-sm">Input</label>
-              <input v-model="word" type="text" name="word" id="word"
-                     class="bg-gray-50 border border-gray-300 text-gray-900 block w-full p-2.5" required="">
-            </div>
-            <div class="flex space-x-5 w-full">
-              <div class="w-full">
-                <label for="from-lang" class="block mb-2 text-sm">From</label>
-                <select v-model="fromLang" id="from-lang"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5">
-                  <option selected value="EN">English</option>
-                  <option value="CS">Czech</option>
-                </select>
-              </div>
-              <div class="w-full">
-                <label for="to-lang" class="block mb-2 text-sm">To</label>
-                <select v-model="toLang" id="to-lang"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5">
-                  <option selected value="CS">Czech</option>
-                  <option value="EN">English</option>
-                </select>
-              </div>
-            </div>
-            <div class="mt-2">
-              <input type="submit" value="Translate"
-                     class="text-white bg-blue-700 hover:bg-blue-800 font-medium text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none w-full"/>
-            </div>
-          </form>
-
-          <div class="flex flex-col items-center justify-center mx-auto">
-
-            <FavoriteWordSaver :word-id="wordId" />
-
-            <Spinner :show="pending"/>
-
-            <ul class="list-decimal text-lg">
-              <li v-for="translation in translations">{{ translation }}</li>
-            </ul>
-
-            <Alert :show="showError" message="Something went wrong." type="error"/>
-            <Alert :show="translations != null && translations.length == 0" message="Word not found!" type="warning"/>
-
-          </div>
+  <div class="w-full md:w-1/2 lg:w-1/4 p-10 md:p-0">
+    <form @submit.prevent="submitForm">
+      <div>
+        <label for="word" class="block mb-2 text-sm">Input</label>
+        <input v-model="word" type="text" name="word" id="word"
+               class="bg-gray-50 border border-gray-300 text-gray-900 block w-full p-2.5" required="">
+      </div>
+      <div class="flex space-x-5 w-full">
+        <div class="w-full">
+          <label for="from-lang" class="block mb-2 text-sm">From</label>
+          <select v-model="fromLang" id="from-lang"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5">
+            <option selected value="EN">English</option>
+            <option value="CS">Czech</option>
+          </select>
+        </div>
+        <div class="w-full">
+          <label for="to-lang" class="block mb-2 text-sm">To</label>
+          <select v-model="toLang" id="to-lang"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5">
+            <option selected value="CS">Czech</option>
+            <option value="EN">English</option>
+          </select>
         </div>
       </div>
-    </section>
+      <div class="mt-2">
+        <input type="submit" value="Translate"
+               class="text-white bg-blue-700 hover:bg-blue-800 font-medium text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none w-full"/>
+      </div>
+    </form>
+
+    <div class="flex flex-col items-center justify-center mx-auto">
+
+      <FavoriteWordSaver :word-id="wordId" :word="word"/>
+
+      <Spinner :show="pending"/>
+
+      <ul class="list-decimal text-lg">
+        <li v-for="translation in translations">{{ translation }}</li>
+      </ul>
+
+      <Alert :show="showError" message="Something went wrong." type="error"/>
+      <Alert :show="translations != null && translations.length == 0" message="Word not found!" type="warning"/>
+
+    </div>
   </div>
 </template>

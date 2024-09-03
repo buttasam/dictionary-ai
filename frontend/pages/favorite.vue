@@ -8,9 +8,10 @@ const favoriteWords: Ref<Array<string>> = await $fetch("http://localhost:8080/tr
 </script>
 
 <template>
-  <ul>
+  <h3>Favorite words - English</h3>
+  <ul class="list-decimal">
     <li v-for="favoriteWord in favoriteWords">
-      {{favoriteWord}}
+      {{ favoriteWord }}
     </li>
   </ul>
 </template>
