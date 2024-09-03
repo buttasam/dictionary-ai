@@ -7,7 +7,7 @@ const FILLED_ICON = "ic:baseline-star";
 
 interface Props {
   wordId?: number,
-  word: string
+  word?: string
 }
 
 const props = defineProps<Props>()

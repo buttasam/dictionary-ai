@@ -12,11 +12,12 @@ interface TranslateResponse {
   translations: string[];
 }
 
-const word: Ref<string> = ref("");
+const input: Ref<string> = ref("");
 const fromLang: Ref<Language> = ref(Language.EN);
 const toLang: Ref<Language> = ref(Language.CS);
 const translations: Ref<Array<string> | null> = ref(null);
 const wordId: Ref<number | undefined> = ref(null);
+const word: Ref<string | undefined> = ref(null);
 const pending: Ref<boolean> = ref(false);
 const showError: Ref<boolean> = ref(false);
 
@@ -27,7 +28,7 @@ async function submitForm(): Promise<void> {
     const response: TranslateResponse = await $fetch("http://localhost:8080/translator/translate", {
       method: "POST",
       body: {
-        word: word.value,
+        word: input.value,
         fromLang: fromLang.value,
         toLang: toLang.value,
       }
@@ -35,6 +36,7 @@ async function submitForm(): Promise<void> {
     console.log(response);
     translations.value = response.translations;
     wordId.value = response.wordId;
+    word.value = input.value;
   } catch (error) {
     console.log(error);
     showError.value = true;
@@ -48,8 +50,8 @@ async function submitForm(): Promise<void> {
   <div class="w-full md:w-1/2 lg:w-1/4 p-10 md:p-0">
     <form @submit.prevent="submitForm">
       <div>
-        <label for="word" class="block mb-2 text-sm">Input</label>
-        <input v-model="word" type="text" name="word" id="word"
+        <label for="input" class="block mb-2 text-sm">Input</label>
+        <input v-model="input" type="text" name="input" id="input"
                class="bg-gray-50 border border-gray-300 text-gray-900 block w-full p-2.5" required="">
       </div>
       <div class="flex space-x-5 w-full">
@@ -76,15 +78,16 @@ async function submitForm(): Promise<void> {
       </div>
     </form>
 
-    <div class="flex flex-col items-center justify-center mx-auto">
-
-      <FavoriteWordSaver :word-id="wordId" :word="word"/>
+    <div class="flex flex-col items-center justify-center mx-auto ">
 
       <Spinner :show="pending"/>
 
-      <ul class="list-decimal text-lg">
-        <li v-for="translation in translations">{{ translation }}</li>
-      </ul>
+      <div v-if="!pending" class="mt-4">
+        <FavoriteWordSaver :word-id="wordId" :word="word"/>
+        <ul class="list-decimal text-lg">
+          <li v-for="translation in translations">{{ translation }}</li>
+        </ul>
+      </div>
 
       <Alert :show="showError" message="Something went wrong." type="error"/>
       <Alert :show="translations != null && translations.length == 0" message="Word not found!" type="warning"/>
