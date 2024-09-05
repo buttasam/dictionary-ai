@@ -19,18 +19,18 @@
 
       <div :class="open ? 'block' : 'hidden'" class="w-full flex-grow sm:flex sm:items-center sm:w-auto">
         <div class="sm:flex-grow">
-          <NuxtLink to="/" class="block sm:inline-block mr-2 p-2">Home</NuxtLink>
-          <NuxtLink to="/favorite" class="block sm:inline-block mr-2 p-2">Favorite</NuxtLink>
+          <NuxtLink to="/" class="block sm:inline-block mr-2 p-2" :class="{ 'font-bold': $route.path === '/' }">Home</NuxtLink>
+          <NuxtLink to="/favorite" class="block sm:inline-block mr-2 p-2" :class="{ 'font-bold': $route.path === '/favorite' }">Favorite</NuxtLink>
         </div>
         <div class="p-2">
-          <NuxtLink to="/favorite" class="mr-2">Login</NuxtLink>
+          <NuxtLink to="/login" class="mr-2">Login</NuxtLink>
         </div>
       </div>
 
     </nav>
-
   </header>
 </template>
+
 <script setup lang="ts">
 
 import type {Ref} from "vue";
