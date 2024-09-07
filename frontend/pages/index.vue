@@ -4,7 +4,8 @@ import Spinner from "~/components/Spinner.vue";
 
 enum Language {
   EN = 'EN',
-  CS = 'CS'
+  CS = 'CS',
+  DE = 'DE'
 }
 
 interface TranslateResponse {
@@ -15,9 +16,18 @@ interface TranslateResponse {
 const input: Ref<string> = ref("");
 const fromLang: Ref<Language> = ref(Language.EN);
 const toLang: Ref<Language> = ref(Language.CS);
+
+const ALL_LANGS = Object.values(Language);
+
+const availableToLangs = computed(() => filterLanguage(fromLang.value));
+
+function filterLanguage(filterLang: Language) {
+  return ALL_LANGS.filter(lang => lang !== filterLang)
+}
+
 const translations: Ref<Array<string> | null> = ref(null);
-const wordId: Ref<number | undefined> = ref(null);
-const word: Ref<string | undefined> = ref(null);
+const wordId: Ref<number | undefined> = ref(undefined);
+const word: Ref<string | undefined> = ref(undefined);
 const pending: Ref<boolean> = ref(false);
 const showError: Ref<boolean> = ref(false);
 
@@ -44,6 +54,20 @@ async function submitForm(): Promise<void> {
     pending.value = false;
   }
 }
+
+watch(fromLang, (newFromLang: Language, _: Language) => {
+  if (newFromLang === toLang.value) {
+    toLang.value = availableToLangs.value[0] as Language;
+  }
+});
+
+function getLanguageName(lang: Language): string {
+  switch (lang) {
+    case Language.EN: return 'English';
+    case Language.CS: return 'Czech';
+    case Language.DE: return 'German';
+  }
+}
 </script>
 
 <template>
@@ -59,16 +83,18 @@ async function submitForm(): Promise<void> {
           <label for="from-lang" class="block mb-2 text-sm">From</label>
           <select v-model="fromLang" id="from-lang"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5">
-            <option selected value="EN">English</option>
-            <option value="CS">Czech</option>
+            <option v-for="lang in ALL_LANGS" :key="lang" :value="lang">
+              {{ getLanguageName(lang) }}
+            </option>
           </select>
         </div>
         <div class="w-full">
           <label for="to-lang" class="block mb-2 text-sm">To</label>
           <select v-model="toLang" id="to-lang"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5">
-            <option selected value="CS">Czech</option>
-            <option value="EN">English</option>
+            <option v-for="lang in availableToLangs" :key="lang" :value="lang">
+              {{ getLanguageName(lang) }}
+            </option>
           </select>
         </div>
       </div>

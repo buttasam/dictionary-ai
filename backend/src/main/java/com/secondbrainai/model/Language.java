@@ -1,7 +1,7 @@
 package com.secondbrainai.model;
 
 public enum Language {
-    CS("Czech"), EN("English");
+    CS("Czech"), EN("English"), DE("German");
 
     private final String displayName;
 

@@ -1,7 +1,7 @@
 <template>
-  <header class="bg-gray-200">
+  <header class="bg-gray-200 shadow-md">
 
-    <nav class="flex items-center justify-between flex-wrap">
+    <nav class="container mx-auto px-4 py-2 flex items-center justify-between flex-wrap">
       <div>
         <NuxtLink to="/">
           <a class="flex items-center text-2xl text-gray-900 m-2">
@@ -19,11 +19,11 @@
 
       <div :class="open ? 'block' : 'hidden'" class="w-full flex-grow sm:flex sm:items-center sm:w-auto">
         <div class="sm:flex-grow">
-          <NuxtLink to="/" class="block sm:inline-block mr-2 p-2" :class="{ 'font-bold': $route.path === '/' }">Home</NuxtLink>
-          <NuxtLink to="/favorite" class="block sm:inline-block mr-2 p-2" :class="{ 'font-bold': $route.path === '/favorite' }">Favorite</NuxtLink>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/favorite">Favorite</NavLink>
         </div>
         <div class="p-2">
-          <NuxtLink to="/login" class="mr-2">Login</NuxtLink>
+          <NavLink to="/login" additional-classes="pl-0">Login</NavLink>
         </div>
       </div>
 
