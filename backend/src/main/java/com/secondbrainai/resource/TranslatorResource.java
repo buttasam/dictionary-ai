@@ -54,7 +54,7 @@ public class TranslatorResource {
     @Path("/favorite")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<String> getFavoriteWords(@NotNull @QueryParam("userId") Integer userId) {
+    public List<TranslationResponse> getFavoriteWords(@NotNull @QueryParam("userId") Integer userId) {
         return favoriteWordsDao.getAllFavoriteWords(userId);
     }
 
