@@ -20,20 +20,30 @@ const isFavorite = ref(false);
 
 const currentIcon = computed(() => isFavorite.value ? FILLED_ICON : BORDER_ICON);
 
-async function saveToFavorite() {
-  try {
-    const response = await $fetch(`${API_URL}/translator/favorite`, {
-      method: "POST",
-      body: {
-        wordId: props.wordId,
-        userId: 1 // FIXME
-      }
-    })
-    console.log(response);
-  } catch (error) {
-    console.log(error);
+async function handleFavoriteIcon() {
+  if(isFavorite.value) {
+    await deleteFromFavorite(props.wordId, 1);
+    isFavorite.value = false;
+  } else {
+    await saveToFavorite(props.wordId, 1);
+    isFavorite.value = true;
   }
 }
+
+async function fetchFavoriteStatus() {
+  if (props.wordId) {
+    try {
+      const response = await $fetch(`${API_URL}/translator/favorite/exists?userId=1&wordId=${props.wordId}`);
+      isFavorite.value = response.isFavorite;
+
+      console.log(response);
+    } catch (error) {
+      console.error("Error fetching favorite status:", error);
+    }
+  }
+}
+
+onMounted(fetchFavoriteStatus);
 
 </script>
 
@@ -42,9 +52,10 @@ async function saveToFavorite() {
     <div class="flex">
       <h1 class="text-xl">{{ word }}</h1>
 
-      <Icon @click="saveToFavorite" :name="currentIcon" class="text-3xl hover:cursor-pointer"
-            @mouseover="() => isFavorite = true"
-            @mouseleave="() => isFavorite = false"
+      <Icon 
+        @click="handleFavoriteIcon" 
+        :name="currentIcon" 
+        class="text-3xl hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:text-yellow-500"
       />
     </div>
   </div>

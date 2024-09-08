@@ -4,6 +4,7 @@ import com.secondbrainai.model.Language;
 import com.secondbrainai.model.TranslationResponse;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +15,12 @@ public class FavoriteWordsDaoImpl extends AbstractDao implements FavoriteWordsDa
     @Override
     public void saveFavoriteWord(int wordId, int userId) {
         var sql = "INSERT INTO favorite_words (word_id, user_id) VALUES (?, ?) ON CONFLICT DO NOTHING";
+        executeUpdate(sql, wordId, userId);
+    }
+
+    @Override
+    public void deleteFavoriteWord(int wordId, int userId) {
+        String sql = "DELETE FROM favorite_words WHERE word_id = ? AND user_id = ?";
         executeUpdate(sql, wordId, userId);
     }
 
@@ -46,5 +53,12 @@ public class FavoriteWordsDaoImpl extends AbstractDao implements FavoriteWordsDa
             return favoriteWords;
         }, userId);
     }
+
+    @Override
+    public boolean isFavoriteWord(int userId, int wordId) {
+        String sql = "SELECT 1 FROM favorite_words WHERE user_id = ? AND word_id = ?";
+        return executeQuery(sql, ResultSet::next, userId, wordId);
+    }
+
 
 }

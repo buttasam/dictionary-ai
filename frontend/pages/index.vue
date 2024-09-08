@@ -71,10 +71,13 @@ function getLanguageName(lang: Language): string {
 </script>
 
 <template>
-  <div class="w-full md:w-1/2 lg:w-1/4 p-10 md:p-0">
+  <div class="w-full md:w-1/2 lg:w-1/3 p-10 md:p-0">
+      <h3 class="text-2xl font-semibold text-center mb-6 text-gray-800">
+      Translator
+      <span class="block w-24 h-1 bg-blue-700 mx-auto mt-2"></span>
+    </h3>
     <form @submit.prevent="submitForm">
       <div>
-        <label for="input" class="block mb-2 text-sm">Input</label>
         <input v-model="input" type="text" name="input" id="input"
                class="bg-gray-50 border border-gray-300 text-gray-900 block w-full p-2.5" required="">
       </div>

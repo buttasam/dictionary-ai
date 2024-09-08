@@ -49,4 +49,8 @@ public class TranslationService {
     public void saveWordToFavorite(FavoriteRequest favoriteRequest) {
         favoriteWordsDao.saveFavoriteWord(favoriteRequest.wordId(), favoriteRequest.userId());
     }
+
+    public void deleteWordFromFavorite(FavoriteRequest favoriteRequest) {
+        favoriteWordsDao.deleteFavoriteWord(favoriteRequest.wordId(), favoriteRequest.userId());
+    }
 }

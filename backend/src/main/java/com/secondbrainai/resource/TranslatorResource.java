@@ -1,6 +1,7 @@
 package com.secondbrainai.resource;
 
 import com.secondbrainai.dao.FavoriteWordsDao;
+import com.secondbrainai.model.FavoriteExistsResponse;
 import com.secondbrainai.model.FavoriteRequest;
 import com.secondbrainai.model.TranslationRequest;
 import com.secondbrainai.model.TranslationResponse;
@@ -10,6 +11,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -52,10 +54,29 @@ public class TranslatorResource {
     }
 
     @Path("/favorite")
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeWordFromFavorite(@NotNull @Valid FavoriteRequest favoriteRequest) {
+        translationService.deleteWordFromFavorite(favoriteRequest);
+        return Response.ok().build();
+    }
+
+    @Path("/favorite")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<TranslationResponse> getFavoriteWords(@NotNull @QueryParam("userId") Integer userId) {
         return favoriteWordsDao.getAllFavoriteWords(userId);
     }
+
+
+    @GET
+    @Path("/favorite/exists")
+    @Produces(MediaType.APPLICATION_JSON)
+    public FavoriteExistsResponse isFavoriteWord(@NotNull @QueryParam("userId") Integer userId,
+                                                 @NotNull @QueryParam("wordId") Integer wordId) {
+        return new FavoriteExistsResponse(favoriteWordsDao.isFavoriteWord(userId, wordId));
+    }
+
 
 }
