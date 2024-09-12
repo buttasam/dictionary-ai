@@ -1,6 +1,7 @@
 package com.secondbrainai.dao;
 
 import com.secondbrainai.model.CredentialsHash;
+import com.secondbrainai.security.UserDetails;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.sql.ResultSet;
@@ -10,11 +11,13 @@ import java.util.Optional;
 public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
-    public Optional<Integer> findUserByAccessToken(String accessToken) {
-        String sql = "SELECT id FROM users WHERE access_token = ?";
+    public Optional<UserDetails> findUserByAccessToken(String accessToken) {
+        String sql = "SELECT id, username FROM users WHERE access_token = ?";
         return Optional.ofNullable(executeQuery(sql, resultSet -> {
             if (resultSet.next()) {
-                return resultSet.getInt(1);
+                return new UserDetails(resultSet.getInt("id"),
+                        resultSet.getString("username")
+                );
             }
             return null;
         }, accessToken));

@@ -32,10 +32,10 @@ public class TokenAuthFilter implements ContainerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             userDao.findUserByAccessToken(authHeader.substring("Bearer ".length()))
                     .ifPresentOrElse(
-                            userId -> requestContext.setSecurityContext(new SecurityContext() {
+                            userDetails -> requestContext.setSecurityContext(new SecurityContext() {
                                 @Override
                                 public Principal getUserPrincipal() {
-                                    return userId::toString;
+                                    return userDetails;
                                 }
 
                                 @Override

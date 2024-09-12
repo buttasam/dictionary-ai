@@ -52,33 +52,33 @@ async function submitForm(): Promise<void> {
       <div class="mb-4">
         <label for="username" class="block mb-2 text-sm">Username</label>
         <input v-model="username" type="text" id="username" name="username"
-               class="bg-gray-50 border border-gray-300 text-gray-900 block w-full p-2.5" required>
+          class="bg-gray-50 border border-gray-300 text-gray-900 block w-full p-2.5" required>
       </div>
       <div class="mb-4">
         <label for="password" class="block mb-2 text-sm">Password</label>
         <input v-model="password" type="password" id="password" name="password"
-               class="bg-gray-50 border border-gray-300 text-gray-900 block w-full p-2.5" required>
+          class="bg-gray-50 border border-gray-300 text-gray-900 block w-full p-2.5" required>
       </div>
       <div class="mb-4">
         <label for="passwordAgain" class="block mb-2 text-sm">Confirm Password</label>
         <input v-model="passwordAgain" type="password" id="passwordAgain" name="passwordAgain"
-               class="bg-gray-50 border border-gray-300 text-gray-900 block w-full p-2.5" required>
+          class="bg-gray-50 border border-gray-300 text-gray-900 block w-full p-2.5" required>
       </div>
       <div class="mt-6">
         <input type="submit" value="Sign Up"
-               class="text-white bg-blue-700 hover:bg-blue-800 font-medium text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none w-full"/>
+          class="text-white bg-blue-700 hover:bg-blue-800 font-medium text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none w-full" />
       </div>
       <div class="mt-4 text-center">
         <p class="text-sm text-gray-600">
-          Already have an account? 
+          Already have an account?
           <NuxtLink to="/login" class="text-blue-700 hover:underline">Login here</NuxtLink>
         </p>
       </div>
     </form>
 
     <div class="flex flex-col items-center justify-center mx-auto mt-4">
-      <Spinner :show="pending"/>
-      <Alert :show="showError" :message="errorMessage" type="error"/>
+      <Spinner :show="pending" />
+      <Alert :show="showError" :message="errorMessage" type="error" />
     </div>
   </div>
 </template>

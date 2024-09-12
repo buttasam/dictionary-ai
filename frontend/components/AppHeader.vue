@@ -1,3 +1,13 @@
+<script setup lang="ts">
+const open: Ref<boolean> = ref(false);
+
+function toggleMenu() {
+  open.value = !open.value;
+}
+
+const { isLoggedIn, logout } = useAuth();
+</script>
+
 <template>
   <header class="bg-gray-200 shadow-md">
 
@@ -5,7 +15,7 @@
       <div>
         <NuxtLink to="/">
           <a class="flex items-center text-2xl text-gray-900 m-2">
-            <Icon name="material-symbols:dictionary-outline-rounded" class="mr-1 text-4xl"/>
+            <Icon name="material-symbols:dictionary-outline-rounded" class="mr-1 text-4xl" />
             Dictionary AI
           </a>
         </NuxtLink>
@@ -13,7 +23,7 @@
 
       <div class="block sm:hidden border border-black rounded px-2 py-1 mr-2">
         <button class="flex items-center font-bold text-2xl" @click="toggleMenu">
-          <Icon name="ic:baseline-menu"/>
+          <Icon name="ic:baseline-menu" />
         </button>
       </div>
 
@@ -24,20 +34,11 @@
         </div>
         <div class="p-2">
           <NavLink v-if="!isLoggedIn" to="/login" additional-classes="pl-0">Login</NavLink>
-          <a v-else href="#" class="block sm:inline-block mr-2 p-2 hover:text-gray-600 transition-colors duration-200" @click="logout">Logout</a>
+          <a v-else href="#" class="block sm:inline-block mr-2 p-2 hover:text-gray-600 transition-colors duration-200"
+            @click="logout">Logout</a>
         </div>
       </div>
 
     </nav>
   </header>
 </template>
-
-<script setup lang="ts">
-const open: Ref<boolean> = ref(false);
-
-function toggleMenu() {
-  open.value = !open.value;
-}
-
-const { isLoggedIn, logout } = useAuth();
-</script>

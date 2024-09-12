@@ -32,7 +32,7 @@ async function submitForm(): Promise<void> {
   translations.value = null;
   pending.value = true;
   try {
-    const response: TranslateResponse = await $fetch("http://localhost:8080/translator/translate", {
+    const response: TranslateResponse = await $fetch(`${API_URL}/translator/translate`, {
       method: "POST",
       body: {
         word: input.value,
@@ -69,20 +69,20 @@ function getLanguageName(lang: Language): string {
 
 <template>
   <div class="w-full md:w-1/2 lg:w-1/3 p-10 md:p-0">
-      <h3 class="text-2xl font-semibold text-center mb-6 text-gray-800">
+    <h3 class="text-2xl font-semibold text-center mb-6 text-gray-800">
       Translator
       <span class="block w-24 h-1 bg-blue-700 mx-auto mt-2"></span>
     </h3>
     <form @submit.prevent="submitForm">
       <div>
         <input v-model="input" type="text" name="input" id="input"
-               class="bg-gray-50 border border-gray-300 text-gray-900 block w-full p-2.5" required>
+          class="bg-gray-50 border border-gray-300 text-gray-900 block w-full p-2.5" required>
       </div>
       <div class="flex space-x-5 w-full">
         <div class="w-full">
           <label for="from-lang" class="block mb-2 text-sm">From</label>
           <select v-model="fromLang" id="from-lang"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5">
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5">
             <option v-for="lang in ALL_LANGS" :key="lang" :value="lang">
               {{ getLanguageName(lang) }}
             </option>
@@ -91,7 +91,7 @@ function getLanguageName(lang: Language): string {
         <div class="w-full">
           <label for="to-lang" class="block mb-2 text-sm">To</label>
           <select v-model="toLang" id="to-lang"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5">
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5">
             <option v-for="lang in availableToLangs" :key="lang" :value="lang">
               {{ getLanguageName(lang) }}
             </option>
@@ -100,23 +100,23 @@ function getLanguageName(lang: Language): string {
       </div>
       <div class="mt-2">
         <input type="submit" value="Translate"
-               class="text-white bg-blue-700 hover:bg-blue-800 font-medium text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none w-full"/>
+          class="text-white bg-blue-700 hover:bg-blue-800 font-medium text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none w-full" />
       </div>
     </form>
 
     <div class="flex flex-col items-center justify-center mx-auto ">
 
-      <Spinner :show="pending"/>
+      <Spinner :show="pending" />
 
       <div v-if="!pending" class="mt-4">
-        <FavoriteStar :word-id="wordId" :word="word"/>
+        <FavoriteStar :word-id="wordId" :word="word" />
         <ul class="list-decimal text-lg">
           <li v-for="translation in translations">{{ translation }}</li>
         </ul>
       </div>
 
-      <Alert :show="showError" message="Something went wrong." type="error"/>
-      <Alert :show="translations != null && translations.length == 0" message="Word not found!" type="warning"/>
+      <Alert :show="showError" message="Something went wrong." type="error" />
+      <Alert :show="translations != null && translations.length == 0" message="Word not found!" type="warning" />
 
     </div>
   </div>

@@ -15,16 +15,16 @@ interface FavoriteResponse {
 const props = defineProps<Props>()
 const isFavorite = ref(false);
 const currentIcon = computed(() => isFavorite.value ? FILLED_ICON : BORDER_ICON);
-const { isLoggedIn , getAccessToken } = useAuth();
+const { isLoggedIn, getAccessToken } = useAuth();
 
 async function handleFavoriteIcon() {
   if (!props.wordId) return;
 
-  if(isFavorite.value) {
-    await deleteFromFavorite(props.wordId, 1);
+  if (isFavorite.value) {
+    await deleteFromFavorite(props.wordId);
     isFavorite.value = false;
   } else {
-    await saveToFavorite(props.wordId, 1);
+    await saveToFavorite(props.wordId);
     isFavorite.value = true;
   }
 }
@@ -32,7 +32,7 @@ async function handleFavoriteIcon() {
 async function fetchFavoriteStatus() {
   if (props.wordId) {
     try {
-      const response: FavoriteResponse = await $fetch(`${API_URL}/translator/favorite/exists?userId=1&wordId=${props.wordId}`, {
+      const response: FavoriteResponse = await $fetch(`${API_URL}/translator/favorite/exists?&wordId=${props.wordId}`, {
         headers: {
           'Authorization': `Bearer ${getAccessToken()}`
         }
@@ -54,15 +54,8 @@ onMounted(fetchFavoriteStatus);
   <div v-if="wordId && isLoggedIn">
     <div class="flex">
       <h1 class="text-xl">{{ word }}</h1>
-      <Icon
-        @click="handleFavoriteIcon" 
-        :name="currentIcon" 
-        class="text-3xl hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:text-yellow-500"
-      />
+      <Icon @click="handleFavoriteIcon" :name="currentIcon"
+        class="text-3xl hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:text-yellow-500" />
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>

@@ -13,7 +13,3 @@ defineProps<Props>();
     <span class="sr-only">Loading...</span>
   </div>
 </template>
-
-<style scoped>
-
-</style>

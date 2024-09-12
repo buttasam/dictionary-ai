@@ -25,17 +25,11 @@ const classes = {
 </script>
 
 <template>
-  <div v-if="show"
-       :class="['w-full flex items-center p-4 mb-4 text-sm border', classes[type]]"
-       role="alert">
-    <Icon :name="icons[type]" class="mr-1"/>
+  <div v-if="show" :class="['w-full flex items-center p-4 mb-4 text-sm border', classes[type]]" role="alert">
+    <Icon :name="icons[type]" class="mr-1" />
     <span class="sr-only">Info</span>
     <div>
       <span class="font-medium">{{ message }}</span>
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>

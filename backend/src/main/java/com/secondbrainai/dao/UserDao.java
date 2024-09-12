@@ -1,12 +1,13 @@
 package com.secondbrainai.dao;
 
 import com.secondbrainai.model.CredentialsHash;
+import com.secondbrainai.security.UserDetails;
 
 import java.util.Optional;
 
 public interface UserDao {
 
-    Optional<Integer> findUserByAccessToken(String accessToken);
+    Optional<UserDetails> findUserByAccessToken(String accessToken);
 
     void insertUser(String username, CredentialsHash credentialsHash);
 
