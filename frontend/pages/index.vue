@@ -76,7 +76,7 @@ function getLanguageName(lang: Language): string {
     <form @submit.prevent="submitForm">
       <div>
         <input v-model="input" type="text" name="input" id="input"
-               class="bg-gray-50 border border-gray-300 text-gray-900 block w-full p-2.5" required="">
+               class="bg-gray-50 border border-gray-300 text-gray-900 block w-full p-2.5" required>
       </div>
       <div class="flex space-x-5 w-full">
         <div class="w-full">
@@ -109,7 +109,7 @@ function getLanguageName(lang: Language): string {
       <Spinner :show="pending"/>
 
       <div v-if="!pending" class="mt-4">
-        <FavoriteWordSaver :word-id="wordId" :word="word"/>
+        <FavoriteStar :word-id="wordId" :word="word"/>
         <ul class="list-decimal text-lg">
           <li v-for="translation in translations">{{ translation }}</li>
         </ul>

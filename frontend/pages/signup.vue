@@ -6,7 +6,7 @@ const pending: Ref<boolean> = ref(false);
 const showError: Ref<boolean> = ref(false);
 const errorMessage: Ref<string> = ref("");
 
-const router: Router = useRouter();
+const router = useRouter();
 
 async function submitForm(): Promise<void> {
   pending.value = true;
@@ -21,7 +21,7 @@ async function submitForm(): Promise<void> {
   }
 
   try {
-    const response = await $fetch("http://localhost:8080/account/signup", {
+    const response = await $fetch(`${API_URL}/account/signup`, {
       method: "POST",
       body: {
         username: username.value,
@@ -31,8 +31,6 @@ async function submitForm(): Promise<void> {
     });
 
     console.log(response);
-    // Handle successful signup (e.g., redirect to login page)
-    console.log("Signup successful");
     await router.push('/login');
   } catch (error) {
     console.error(error);

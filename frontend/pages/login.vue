@@ -9,7 +9,7 @@ const password: Ref<string> = ref("");
 const pending: Ref<boolean> = ref(false);
 const showError: Ref<boolean> = ref(false);
 
-const router: Router = useRouter();
+const router = useRouter();
 
 const { login } = useAuth();
 
@@ -18,7 +18,7 @@ async function submitForm(): Promise<void> {
   pending.value = true;
   showError.value = false;
   try {
-    const response: LoginResponse = await $fetch("http://localhost:8080/account/login", {
+    const response: LoginResponse = await $fetch(`${API_URL}/account/login`, {
       method: "POST",
       body: {
         username: username.value,
@@ -27,8 +27,7 @@ async function submitForm(): Promise<void> {
     });
 
     login(response.accessToken);
-    console.log("Login successful");
-    router.push("/");
+    await router.push("/");
   } catch (error) {
     console.error(error);
     showError.value = true;

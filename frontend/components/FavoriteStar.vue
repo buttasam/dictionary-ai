@@ -1,28 +1,25 @@
 <script setup lang="ts">
 
-import type {Ref} from "vue";
-
 const BORDER_ICON = "ic:baseline-star-border";
 const FILLED_ICON = "ic:baseline-star";
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
 interface Props {
   wordId?: number,
   word?: string
 }
 
+interface FavoriteResponse {
+  isFavorite: boolean;
+}
+
 const props = defineProps<Props>()
-
-const icon: Ref<string> = ref(BORDER_ICON);
-
 const isFavorite = ref(false);
-
 const currentIcon = computed(() => isFavorite.value ? FILLED_ICON : BORDER_ICON);
-
 const { isLoggedIn , getAccessToken } = useAuth();
 
 async function handleFavoriteIcon() {
+  if (!props.wordId) return;
+
   if(isFavorite.value) {
     await deleteFromFavorite(props.wordId, 1);
     isFavorite.value = false;
@@ -35,7 +32,7 @@ async function handleFavoriteIcon() {
 async function fetchFavoriteStatus() {
   if (props.wordId) {
     try {
-      const response = await $fetch(`${API_URL}/translator/favorite/exists?userId=1&wordId=${props.wordId}`, {
+      const response: FavoriteResponse = await $fetch(`${API_URL}/translator/favorite/exists?userId=1&wordId=${props.wordId}`, {
         headers: {
           'Authorization': `Bearer ${getAccessToken()}`
         }
@@ -57,8 +54,7 @@ onMounted(fetchFavoriteStatus);
   <div v-if="wordId && isLoggedIn">
     <div class="flex">
       <h1 class="text-xl">{{ word }}</h1>
-
-      <Icon 
+      <Icon
         @click="handleFavoriteIcon" 
         :name="currentIcon" 
         class="text-3xl hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:text-yellow-500"
