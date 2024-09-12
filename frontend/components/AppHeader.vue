@@ -33,9 +33,9 @@ const { isLoggedIn, logout } = useAuth();
           <NavLink to="/favorite" v-if="isLoggedIn">Favorite</NavLink>
         </div>
         <div class="p-2">
-          <NavLink v-if="!isLoggedIn" to="/login" additional-classes="pl-0">Login</NavLink>
-          <a v-else href="#" class="block sm:inline-block mr-2 p-2 hover:text-gray-600 transition-colors duration-200"
-            @click="logout">Logout</a>
+          <NavLink :to="'/login'" additional-classes="pl-0" @click="!isLoggedIn ? null : logout()">
+            {{ isLoggedIn ? 'Logout' : 'Login' }}
+          </NavLink>
         </div>
       </div>
 
