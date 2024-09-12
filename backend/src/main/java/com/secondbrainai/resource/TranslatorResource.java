@@ -1,11 +1,15 @@
 package com.secondbrainai.resource;
 
+import java.util.List;
+
 import com.secondbrainai.dao.FavoriteWordsDao;
 import com.secondbrainai.model.FavoriteExistsResponse;
 import com.secondbrainai.model.FavoriteRequest;
 import com.secondbrainai.model.TranslationRequest;
 import com.secondbrainai.model.TranslationResponse;
+import com.secondbrainai.security.Secured;
 import com.secondbrainai.service.TranslationService;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -17,10 +21,10 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-
-import java.util.List;
+import jakarta.ws.rs.core.SecurityContext;
 
 @Path("/translator")
 @ApplicationScoped
@@ -44,6 +48,7 @@ public class TranslatorResource {
     }
 
 
+    @Secured
     @Path("/favorite")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -70,6 +75,7 @@ public class TranslatorResource {
     }
 
 
+    @Secured
     @GET
     @Path("/favorite/exists")
     @Produces(MediaType.APPLICATION_JSON)
@@ -77,6 +83,5 @@ public class TranslatorResource {
                                                  @NotNull @QueryParam("wordId") Integer wordId) {
         return new FavoriteExistsResponse(favoriteWordsDao.isFavoriteWord(userId, wordId));
     }
-
 
 }

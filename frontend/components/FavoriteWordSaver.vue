@@ -20,6 +20,8 @@ const isFavorite = ref(false);
 
 const currentIcon = computed(() => isFavorite.value ? FILLED_ICON : BORDER_ICON);
 
+const { isLoggedIn , getAccessToken } = useAuth();
+
 async function handleFavoriteIcon() {
   if(isFavorite.value) {
     await deleteFromFavorite(props.wordId, 1);
@@ -33,7 +35,11 @@ async function handleFavoriteIcon() {
 async function fetchFavoriteStatus() {
   if (props.wordId) {
     try {
-      const response = await $fetch(`${API_URL}/translator/favorite/exists?userId=1&wordId=${props.wordId}`);
+      const response = await $fetch(`${API_URL}/translator/favorite/exists?userId=1&wordId=${props.wordId}`, {
+        headers: {
+          'Authorization': `Bearer ${getAccessToken()}`
+        }
+      });
       isFavorite.value = response.isFavorite;
 
       console.log(response);
@@ -48,7 +54,7 @@ onMounted(fetchFavoriteStatus);
 </script>
 
 <template>
-  <div v-if="wordId">
+  <div v-if="wordId && isLoggedIn">
     <div class="flex">
       <h1 class="text-xl">{{ word }}</h1>
 

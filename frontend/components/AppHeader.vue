@@ -20,10 +20,11 @@
       <div :class="open ? 'block' : 'hidden'" class="w-full flex-grow sm:flex sm:items-center sm:w-auto">
         <div class="sm:flex-grow">
           <NavLink to="/">Home</NavLink>
-          <NavLink to="/favorite">Favorite</NavLink>
+          <NavLink to="/favorite" v-if="isLoggedIn">Favorite</NavLink>
         </div>
         <div class="p-2">
-          <NavLink to="/login" additional-classes="pl-0">Login</NavLink>
+          <NavLink v-if="!isLoggedIn" to="/login" additional-classes="pl-0">Login</NavLink>
+          <a v-else href="#" class="block sm:inline-block mr-2 p-2 hover:text-gray-600 transition-colors duration-200" @click="logout">Logout</a>
         </div>
       </div>
 
@@ -32,13 +33,11 @@
 </template>
 
 <script setup lang="ts">
-
-import type {Ref} from "vue";
-
 const open: Ref<boolean> = ref(false);
 
 function toggleMenu() {
   open.value = !open.value;
 }
 
+const { isLoggedIn, logout } = useAuth();
 </script>
