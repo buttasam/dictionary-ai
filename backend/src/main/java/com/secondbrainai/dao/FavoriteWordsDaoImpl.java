@@ -27,7 +27,7 @@ public class FavoriteWordsDaoImpl extends AbstractDao implements FavoriteWordsDa
     @Override
     public List<TranslationResponse> getAllFavoriteWords(int userId) {
         var sql = """
-                SELECT fromWord.word AS wordA,
+                SELECT fromWord.word AS wordFrom,
                     fromWord.id AS wordId,
                     ARRAY_AGG(toWord.word) AS trans,
                     fromWord.language AS wordLang,
@@ -37,13 +37,13 @@ public class FavoriteWordsDaoImpl extends AbstractDao implements FavoriteWordsDa
                      JOIN words toWord ON t.to_id = toWord.id
                      JOIN favorite_words fw ON fw.word_id = fromWord.id
                 WHERE fw.user_id = ?
-                GROUP BY wordA, wordId, wordLang, toLang
+                GROUP BY wordFrom, wordId, wordLang, toLang
                 """;
         return executeQuery(sql, r -> {
             List<TranslationResponse> favoriteWords = new ArrayList<>();
             while (r.next()) {
                 favoriteWords.add(new TranslationResponse(
-                        r.getString("wordA"),
+                        r.getString("wordFrom"),
                         r.getInt("wordId"),
                         Arrays.stream(((String[]) r.getArray("trans").getArray())).toList(),
                         Language.valueOf(r.getString("wordLang")),

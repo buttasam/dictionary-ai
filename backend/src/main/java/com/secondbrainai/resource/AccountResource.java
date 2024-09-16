@@ -23,7 +23,6 @@ import java.util.Arrays;
 @ApplicationScoped
 public class AccountResource {
 
-
     @Inject
     public AccountResource(UserDao userDao) {
         this.userDao = userDao;

@@ -18,6 +18,8 @@ import java.security.Principal;
 @Priority(Priorities.AUTHENTICATION)
 public class TokenAuthFilter implements ContainerRequestFilter {
 
+    private static final String BEARER = "Bearer ";
+
     private final UserDao userDao;
 
     @Inject
@@ -29,8 +31,8 @@ public class TokenAuthFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) {
         String authHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            userDao.findUserByAccessToken(authHeader.substring("Bearer ".length()))
+        if (authHeader != null && authHeader.startsWith(BEARER)) {
+            userDao.findUserByAccessToken(authHeader.substring(BEARER.length()))
                     .ifPresentOrElse(
                             userDetails -> requestContext.setSecurityContext(new SecurityContext() {
                                 @Override

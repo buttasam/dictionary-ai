@@ -1,13 +1,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: second-brain-ai
+  name: dictionary-ai
   labels:
-    app: second-brain-ai
+    app: dictionary-ai
 spec:
   type: ClusterIP
   selector:
-    app: second-brain-ai
+    app: dictionary-ai
   ports:
     - name: tcp
       port: 8080
@@ -17,21 +17,21 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: second-brain-ai
+  name: dictionary-ai
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: second-brain-ai
+      app: dictionary-ai
   template:
     metadata:
       labels:
-        app: second-brain-ai
+        app: dictionary-ai
         version: v1
     spec:
       containers:
-      - name: second-brain-ai
-        image: second-brain-ai
+      - name: dictionary-ai
+        image: dictionary-ai
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080

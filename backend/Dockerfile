@@ -31,9 +31,9 @@ FROM container-registry.oracle.com/java/jdk-no-fee-term:21
 WORKDIR /helidon
 
 # Copy the binary built in the 1st stage
-COPY --from=build /helidon/target/second-brain-ai.jar ./
+COPY --from=build /helidon/target/dictionary-ai.jar ./
 COPY --from=build /helidon/target/libs ./libs
 
-CMD ["java", "-jar", "second-brain-ai.jar"]
+CMD ["java", "-jar", "dictionary-ai.jar"]
 
 EXPOSE 8080

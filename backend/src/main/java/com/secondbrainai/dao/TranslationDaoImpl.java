@@ -59,7 +59,6 @@ public class TranslationDaoImpl extends AbstractDao implements TranslationDao {
     }
 
     private int insertWord(Connection connection, String word, Language language) {
-        // find word
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM words WHERE word = ? AND language = ?::language;")) {
             preparedStatement.setString(1, word);
             preparedStatement.setString(2, language.name());
@@ -72,7 +71,6 @@ public class TranslationDaoImpl extends AbstractDao implements TranslationDao {
             throw new RuntimeException(e);
         }
 
-        // or else insert
         String insertWordSQL = "INSERT INTO words(word, language) VALUES (?, ?::language)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertWordSQL, PreparedStatement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, word);

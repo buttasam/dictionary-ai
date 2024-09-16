@@ -4,9 +4,9 @@ javax:
       postgres:
         dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
         dataSource:
-          url: jdbc:postgresql://localhost/postgres
-          user: sbutta
-          password: ""
+          url: jdbc:postgresql://localhost/postgres # update your connection string
+          user: sbutta # update your credentials
+          password: "" # update your password
 
 openai:
   endpoint: https://api.openai.com/v1

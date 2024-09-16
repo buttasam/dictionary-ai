@@ -4,6 +4,8 @@
 
 Dictionary AI is a multi-language translator powered by ChatGPT. It offers AI-driven translations, user authentication, and the ability to save favorite translations. The application is built with a [Helidon 4](https://helidon.io/) (Java) backend, [Nuxt3/Vue](https://nuxt.com/) frontend styled with [Tailwind CSS](https://tailwindcss.com/), and uses [PostgreSQL](https://postgresql.org/) for data storage.
 
+<img alt="app-screenshot.png" src="img/app-screenshot.png" width="500"/>
+
 ## Future Development
 
 The development is still in progress. Additional features are planned for future implementation, which will expand Dictionary AI's capabilities and enhance the user experience.

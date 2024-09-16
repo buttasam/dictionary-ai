@@ -30,6 +30,6 @@ RUN echo "done!"
 
 FROM debian:stretch-slim
 WORKDIR /helidon
-COPY --from=build /helidon/target/second-brain-ai-jri ./
+COPY --from=build /helidon/target/dictionary-ai-jri ./
 ENTRYPOINT ["/bin/bash", "/helidon/bin/start"]
 EXPOSE 8080

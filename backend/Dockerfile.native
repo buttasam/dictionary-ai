@@ -32,8 +32,8 @@ FROM scratch
 WORKDIR /helidon
 
 # Copy the binary built in the 1st stage
-COPY --from=build /helidon/target/second-brain-ai .
+COPY --from=build /helidon/target/dictionary-ai .
 
-ENTRYPOINT ["./second-brain-ai"]
+ENTRYPOINT ["./dictionary-ai"]
 
 EXPOSE 8080
